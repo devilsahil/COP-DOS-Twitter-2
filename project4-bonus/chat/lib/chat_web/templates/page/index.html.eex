@@ -8,15 +8,14 @@
   <div class="col-xs-9">
     <input type="text" id="msg" class="form-control" placeholder="Your Message">
   </div>
+    
 </div>
 
-<ul id='msg-list1' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
-
-<div class="row">
-  <div class="col-xs-3">
-    <input type="text" id="name1" class="form-control" placeholder="Your Name" autofocus>
+<ul id='hi' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
+<div class="col-xs-9">
+    <button id='hello' type="button">Register</button>
   </div>
   <div class="col-xs-9">
-    <input type="text" id="msg1" class="form-control" placeholder="Your Message">
+    <button id='login' type="button">Login</button>
   </div>
-</div>
+

@@ -32,27 +32,27 @@ let ul = document.getElementById('msg-list');        // list of messages.
 let name = document.getElementById('name');          // name of message sender
 let msg = document.getElementById('msg');            // message input field
 
-let channel1 = socket.channel('room:lobby1', {}); // connect to chat "room"
-channel1.on('shout', function (payload) { // listen to the 'shout' event
+
+
+
   
-  let li = document.createElement("li"); // create new list item DOM element
-  let name1 = payload.name || 'guest';    // get name from payload or set default
-  li.innerHTML = '<b>' + name + '</b>: ' + payload.message + "Put Simulation Results here"; // set li contents
-  ul1.appendChild(li);                    // append to list
-                      // append to list
+hello.addEventListener('click', function(event){
+  channel.push('shout', { // send the message to the server on "shout" channel
+      name: name.value,     // get value of "name" of person sending the message
+      message: msg.value
+    });
+
+    
 });
-channel1.join(); // join the channel.
 
+login.addEventListener('click', function(event){
+  channel.push('login', { // send the message to the server on "shout" channel
+      name: name.value,     // get value of "name" of person sending the message
+      message: msg.value
+    });
 
-
-
-let ul1 = document.getElementById('msg-list1');        // list of messages.
-let name1 = document.getElementById('name1');          // name of message sender
-let msg1 = document.getElementById('msg1');            // message input field
-
-
-  
-
+    
+});
 
 // "listen" for the [Enter] keypress event to send a message:
 msg.addEventListener('keypress', function (event) {
@@ -64,12 +64,6 @@ msg.addEventListener('keypress', function (event) {
    
     msg.value = '';         // reset the message input field for next message.
 
-    channel1.push('shout', { // send the message to the server on "shout" channel
-    name: name1.value,     // get value of "name" of person sending the message
-    message: msg1.value
-  });
- 
-  msg1.value = '';         // reset the message input field for next message.
 
   }
 });

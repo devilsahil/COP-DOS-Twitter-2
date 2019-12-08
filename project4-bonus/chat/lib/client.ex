@@ -8,9 +8,9 @@ defmodule Client do
 
     def init([userId,noOfTweets,noToSubscribe, noOfClients, existingUser]) do
         #Register Account
-        if existingUser do  
-            IO.puts "User #{userId} :- reconnected" 
-            login_handler(userId)   
+        if existingUser do
+            IO.puts "User #{userId} :- reconnected"
+            login_handler(userId)
         end
         :global.sync()
         GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:userRegistration,userId,self()})
@@ -20,23 +20,16 @@ defmodule Client do
     def handle_cast({:registerConfirmation}, {userId, noOfTweets, tweetsDone, noToSubscribe, noOfClients, start_time, tweets_time_diff, queries_subscribedto_time_diff, queries_hashtag_time_diff, queries_mention_time_diff}) do
         IO.puts "User #{userId} :- has joined the Twitter Server!"
 
-        #Subscribe
-        if noToSubscribe > 0 do
-            subList = Enum.take_random(List.delete(Enum.to_list(1..noOfClients), String.to_integer(userId)), noToSubscribe)
-            handle_subscribe(userId,subList)
-        end
+        ChatWeb.RoomChannel.registrationConfirmation(userId)
 
-        tweets_time_diff = System.system_time(:millisecond)
-        start_time = System.system_time(:millisecond)
-        client_handler(userId,noOfTweets,noToSubscribe, noOfClients)
         {:noreply, {userId, noOfTweets, tweetsDone, noToSubscribe, noOfClients, start_time, tweets_time_diff, queries_subscribedto_time_diff, queries_hashtag_time_diff, queries_mention_time_diff}}
-    end 
+    end
 
-    def login_handler(userId) do    
-        GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:loginUser,userId,self()})   
-        for _ <- 1..5 do    
-            GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:tweetParse,"Tweet by user#{userId} : FSU sucks",userId})   
-        end 
+    def login_handler(userId) do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:loginUser,userId,self()})
+        for _ <- 1..5 do
+            GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:tweetParse,"Tweet by user#{userId} : FSU sucks",userId})
+        end
     end
 
     def client_handler(userId,noOfTweets,noToSubscribe, noOfClients) do
@@ -152,4 +145,42 @@ defmodule Client do
         send(self(), :terminate)
     end
 
+
+
+    #-----------------------------------------------------------------------------------------------------------
+    def register() do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:userRegistration,@userId,self()})
+    end
+
+    def login() do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:loginUser,@userId,self()})
+    end
+
+    def subscribeToUser(accountId) do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:addToSubscriberList,@userId,Integer.to_string(accountId)})
+    end
+
+    def tweet(message) do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:tweetParse, message, @userId})
+    end
+
+    def retweet(message) do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")), {:tweetParse, message <> " -RT", @userId})
+    end
+
+    def get_my_tweets() do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")), {:queryOwnTweets, @userId})
+    end
+
+    def send_perf_metrics(tweets_time_diff,queries_subscribedto_time_diff,queries_hashtag_time_diff,queries_mention_time_diff,queries_myTweets_time_diff) do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")),{:perfmetrics})
+    end
+
+    def query_hashtag(tag) do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")), {:hashTweets, tag})
+    end
+
+    def query_mentions() do
+        GenServer.cast(:global.whereis_name(String.to_atom("Server")), {:mentionTweets, @userId})
+    end
 end
