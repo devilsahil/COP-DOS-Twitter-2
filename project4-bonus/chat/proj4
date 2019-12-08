@@ -1,0 +1,10 @@
+defmodule PROJECT4 do
+  def loop() do
+    loop()
+  end
+  def main(args) do
+    MAIN.main(args)
+  end
+end
+
+PROJECT4.main(System.argv)
