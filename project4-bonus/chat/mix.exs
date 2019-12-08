@@ -20,7 +20,6 @@ defmodule Chat.MixProject do
   def application do
     [
       mod: {Chat.Application, []},
-      mod: {Project4.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

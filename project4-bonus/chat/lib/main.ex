@@ -1,20 +1,20 @@
 defmodule MAIN do
-    def main(args) do
-      args |> parse_args |> delegate
-    end
+    # def main(args) do
+    #   args |> parse_args |> delegate
+    # end
 
-    defp parse_args(args) do
-      {_,parameters,_} = OptionParser.parse(args)
-      parameters
-    end
+    # defp parse_args(args) do
+    #   {_,parameters,_} = OptionParser.parse(args)
+    #   parameters
+    # end
 
-    def delegate(parameters) do
+    def delegate() do
         # pid = spawn(fn -> Server.start_link() end)
         # :global.register_name(:TwitterServer, pid)
         :global.sync()
-        numClients = String.to_integer(Enum.at(parameters,0))
+        numClients = 5#String.to_integer(Enum.at(parameters,0))
         {:ok, server_pid} = Server.start_link(numClients)
-        numMessages = String.to_integer(Enum.at(parameters,1))
+        numMessages = 5#String.to_integer(Enum.at(parameters,1))
         disconnectClients = 30
         clientsToDisconnect = disconnectClients * (0.01) * numClients
         :ets.new(:mainregistry, [:set, :public, :named_table])
