@@ -1,0 +1,15 @@
+/_build
+/db
+/deps
+/*.ez
+npm-debug.log
+
+/assets/node_modules
+
+/priv/static/
+
+/config/*.secret.exs
+config/dev.exs
+
+
+erl_crash.dump
