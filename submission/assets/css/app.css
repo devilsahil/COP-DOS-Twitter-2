@@ -50,18 +50,6 @@
   background-color:white;
 } 
 
-
-/* .boxSub{
-  display: inline-block; 
-  height: 92px;
-  width: 405px;
-  padding: 5px;
-  vertical-align:justify;
-  margin: 0 auto
-  
-  
-} */
-
 #button-retweet {
   border: 1px solid #777;
   height: 30px;
@@ -74,19 +62,6 @@
   text-align: top;
   width: 100px;
   
-}
-
-.signupPart {
-  border: 1px solid green;
-  border-style: ridge;
-  /* height: 30px; */
-  padding: 5px;
-  text-align: justify;
-  margin-bottom: 50px;
-  margin: 0 auto;
-  width: 400px;
-  font: 'Times New Roman';
-  background-color: rgba(58, 71, 146, 0.301);
 }
 
 .dash{
@@ -135,14 +110,6 @@
   margin: 0 auto
   
   
-}
-
-#signupPart {
-  border: 1px solid #777;
-  /* height: 30px; */
-  padding: 5px;
-  text-align: justify;
-  margin-bottom: 50px;
 }
 
 /* Style all font awesome icons */

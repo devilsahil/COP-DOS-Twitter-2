@@ -92,7 +92,7 @@ channel.on('Login', payload => {
   unlog.innerHTML = '';
    if(`${payload.login_status}` == "Login unsuccessful")
    {
-    unlog.innerHTML+= (`<b>Incorrect username or password.Please try again!<br>`);
+    unlog.innerHTML+= (`<b>Invalid credentials. Please try again!<br>`);
    }
    else 
    {
